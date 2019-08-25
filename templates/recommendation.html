@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Movie Recommendations</title>
+        <!-- <link rel="stylesheet" href="style.css"> -->
+        <style>
+            a.link:hover {
+              background-color: #BC1818;
+            }
+        
+            .search-box-wrapper{
+                display: inline-flex;
+                font-size: 1em;
+                position: absolute;
+                left: 35%;
+                right: 35%;
+                
+            }
+
+            .search-box-input {
+                border: 0.1em solid #737373;
+                border-radius: 0.3em 0 0 0.3em;
+                padding: 0.2em 0.5em;
+                outline: 0;
+                width:700px;
+                height:35px;
+                text-align:center;
+            }
+
+            .search-box-input:hover,
+            .search-box-input:focus {
+                border: 0.2em solid #042345;
+                
+            }
+
+            .search-box-button {
+                font-size: inherit;
+                font-weight:400;
+                border: 0.1em solid #737373; 
+                border-radius: 0 0.3em 0.3em 0;
+                background-color: #737373;
+                border-left: 0;
+                color: white;
+                padding: 0 0.75em;
+                outline: 0;
+                cursor: pointer;
+
+            }
+            .search-box-button:hover,
+            .search-box-button:focus {
+                border-color: #042345;
+                background-color: #042345;
+            }
+            .data{
+                font-size: 12px;
+                color: aliceblue;
+            }
+
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </head>
+    <body style="background-color:#91162a;background-image:linear-gradient(-90deg,#BC1818,#91162a)" class = "body_all">
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #042345;">
+            <a class="navbar-brand" href="{{ url_for('index') }} "  style="font-weight: 400"><img class="img-fluid" style="width:80px;height:auto;" src="https://i.ibb.co/FzKq07Z/logo1.jpg">Movie Recommendations</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class = "navbar-nav ml-auto">
+                        <li class="nav-item"><a  class="nav-link active link" href="{{ url_for('analysis') }}" >Analysis</a></li>
+                        <li class="nav-item"><a  class="nav-link active link" href="{{ url_for('recommendation') }}" >Recommendation</a></li>                 
+                </ul>                
+            </div>
+        </nav>
+
+    </div>
+    <div class = "container">
+        <div class ="row  ">
+             <div class = "jumbotron mt-3 mx-auto">
+        
+                <h4 class = "display-4">What Are you Gonna Watch Tonight? &#128515</h4>
+                <p class ="lead mx-auto"> Use this system to discover movies based on a user ratings history</p>
+                <p>The sample dataset used in this application contains 7,866 movies rated by 27,585 users. The system will return a maximum of 10 suggestions out of the top 100 returns. There may be no result if the user's history and the movie tite submitted are very different. </p>
+                     
+                <p>Use the sample movies and userIDs listed below for testing the system.  </p>
+                <form action="{{ url_for('send') }}" method="POST">
+                    <input type = 'text' name = 'title' placeholder="Enter Movie Name.... " value={{request.form.title}}>
+                    <input type = 'text' name = 'userId' placeholder="Enter a User ID.... " value={{request.form.userId}}>
+                    
+            
+                     <button class="search-box-button">Submit</button>  
+    
+                </form>
+           
+                <table class = "table table-bordered table-dark table-responsive th.fit">
+                        <thead class = "thead-light">
+                            <tr>
+                                {% for col in colnames %}
+                                <th><h4>{{ col }}</h4></th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in records %}
+                            <tr>
+                                {% for col in colnames %}
+                                <td>{{ record[col] }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                
+                <hr class="my-4">
+                <table class="table table-sm">
+                       <thead><b>Sample Movies</b></thead>
+                      <tr>
+                        <td>Forrest Gump</td>
+                        <td>Braveheart</td>
+                        <td>Pulp Fiction</td>
+                        <td>Toy Story</td>
+                        <td>Good Will Hunting</td>
+                        <td>Shrek</td>
+                    
+                      </tr>
+                      <tr>
+                        
+                        <td>Fargo</td>
+                        <td>Jurassic Park</td>
+                        <td>Finding Nemo</td>
+                        <td>Saving Private Ryan</td>
+                        <td>Star Wars: Episode IV - A New Hope</td>
+                        <td>Titanic</td>              
+                    
+                      </tr>
+                     
+                      <tr>
+                        <td>Terminator 2: Judgment Day</td>
+                        <td>American Beauty</td>
+                        <td>Groundhog Day</td>
+                        <td>Gladiator</td>
+                        <td>Fight Club</td>
+                        <td>Apollo 13</td>
+                        
+                      </tr>
+                 
+                      
+                    </table>
+                    <hr class="my-4">
+                  <div><table class="table table-responsive">
+                        <thead><b>Sample User Ids </b></thead>
+                          <tr>
+                            <td>85983</td>
+                            <td>71558</td>
+                            <td>220354</td>
+                            <td>6079</td>
+                            <td>294</td>
+                            <td>92111</td>
+                            <td>1283</td>
+                            <td>18651</td>
+                            <td>5461</td>
+                            <td>9007</td>
+                            <td>51488</td>
+                            <td>68205</td>
+                            <td>66255</td>
+                            <td>25654</td>
+                          </tr>
+                          <!-- <tr>
+                            
+                            <td>131097</td>
+                            <td>88746</td>
+                            <td>183524</td>
+                            <td>241751</td>
+                            <td>146022</td>
+                            <td>85204</td>
+                            <td>42213</td>
+                            <td>74859</td>
+                            <td>139736</td>
+                            <td>251724</td>
+                            <td>215330</td>
+                            <td>132132</td>
+                            <td>186953</td>
+                            <td>174825</td>
+                          </tr> -->
+                        
+                          
+                        </table></div>
+               
+
+                
+              
+            
+            
+            
+
+    </div>
+              
+        <div class = "row">
+
+                 
+
+           
+
+         </div>
+         
+       
+           
+
+        <div class = "row">
+            <div class = "card col-md-10">
+                    <!-- <h3 class = "card-title">Other Movies you might like</h3> -->
+                
+        <div class=page>
+
+        
+    
+         </div>
+
+    </div>
+</div>
+
+</div>  
+
+
+    </body>
+</html>

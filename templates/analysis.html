@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Movie Recommendations</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            a.link:hover {
+              background-color: #BC1818;
+            }
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </head>
+    <body style="background-color:#FF0000;background-image:linear-gradient(-90deg,#BC1818,#FF0000)" class = "body_all">
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #042345;">
+            <a class="navbar-brand" 0 href="index.html" style="font-weight: 400"><img class="img-fluid" style="width:80px;height:auto;" src="https://i.ibb.co/FzKq07Z/logo1.jpg">Movie Recommendations</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class = "navbar-nav ml-auto">
+                        <li class="nav-item"><a  class="nav-link active link" href="{{ url_for('analysis') }}" >Analysis</a></li>
+                        <li class="nav-item"><a  class="nav-link active link" href="{{ url_for('recommendation') }}" >Recommendation</a></li>               
+                </ul>                
+            </div>
+        </nav>
+
+    <div class = "container">
+
+        <div class = "row mt-5 ml-5">
+   <!-- "{{url_for('static', filename='ayrton_senna_movie_wallpaper_by_bashgfx-d4cm6x6.jpg')}}" -->
+            <div class = " card col-md-10">
+                <h4 class = "card-header"> Relationship between Number of Ratings and Mean Rating </h4>
+                <img src = "{{url_for('static',filename = 'mean_ratings_scatter.png')}}"></img>
+
+                <p>The Scatter Plot above demonstrates a few facts about the data set: </p>
+                <ul>
+                    <li>Most movies are rated less than 20,000 times</li>   
+                    <li>The majority of movies have a mean rating of between 3 and 4 on a scale of 1 to 5</li>  
+                    <li>There is a slight positive relationship between number of ratings and mean rating </li>  
+                    <li>The movies that are rated 5 have very few ratings</li>  
+                </ul>
+
+               
+                 
+
+            </div>
+        </div>
+        <div class = "row mt-5 ml-5">
+                <!-- <div class = "embed-responsive embed-responsive-4by3"> -->
+                <div class = " card col-md-10">
+                        <h4 class = "card-header"> Summary of the Distribution of the Total Ratings per User </h4>
+                        
+                        <img src = "{{url_for('static',filename = 'ratings_histogram.png')}}"> </img>
+                        <p>The histogram and other supporting exploratory analysis demonstrated the following facts about the Ratings dataset:</p>
+                            <ul>
+                                <li> The majority of users rated less than a 100 movies. Exploratory Data Analysis showed that the mean number of ratings per user is 56.   </li>
+                                <li>Very few users rated more than 500 movies</li>
+                            </ul>
+                        <p> Due to limited processing power, we had to limit the size of our Ratings dataset. As a result of these results, we chose to utilize a subset of similar users based on the fact that they rated a similar number of movies. We attempted a variety of ranges to find a quality dataset of users and movies. In a larger version of this project we used Users who rated between 75 and 150 movies. This dataset contained 11,102 unique movies rated by 27,585 users. <a href="https://github.com/zeexav/TZP3" target = "_blank">Visit our Github Repo </a> </p>
+                        
+
+                       
+        
+                        </div>
+
+                </div>                   
+                    
+            </div>
+</div>
+
+       
+    
+
+    </body>
+</html>
