@@ -55,21 +55,9 @@ def send():
         ratings = pd.read_hdf('Data/ratings_demo.h5')
         ratings_demo_matrix = pd.read_hdf('Data/ratings_demo_mx.h5')
 
-        U = joblib.load('Data/U.pkl')
-        Vt = joblib.load('Data/Vt.pkl')
-        sigma = joblib.load('Data/sigma.pkl')
-
-        # normalize the data by each users mean and convert it from a dataframe to a numpy array.
-        R = ratings_demo_matrix.values
-        user_ratings_mean = np.mean(R, axis = 1)
-
-        # The last step of normalization is not needed in the function since it is used when U, Vt and sigma were previously calculated
-        # Ratings_demeaned = R - user_ratings_mean.reshape(-1, 1) 
-        
-
-        #calculate prediction scores
-        user_predicted_ratings = np.dot(np.dot(U, sigma), Vt) + user_ratings_mean.reshape(-1, 1)
-        preds_demo = pd.DataFrame(user_predicted_ratings, columns = ratings_demo_matrix.columns)
+               
+        # load preds demo
+        preds_demo = pd.read_hdf('Data/preds_demo.h5')
 
         #map the userId column to the predictions
         id = ratings_demo_matrix.index
